@@ -37,12 +37,11 @@
   },
   "homepage": "https://github.com/USER/pi-vision-bridge#readme",
   "pi": {
-    "extensions": [
-      "./index.ts"
-    ]
+    "extensions": ["./index.ts"]
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@types/node": "^26.1.1",
     "typescript": "^5.9.3"
   }
 }

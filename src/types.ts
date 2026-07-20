@@ -1,20 +1,38 @@
+export type CommandContext = {
+  pi: PiInstance;
+  cwd: string;
+  env: Record<string, string | undefined>;
+  ui?: {
+    notify: (message: string, level?: "info" | "warn" | "error") => void;
+  };
+};
+
 export type PiCommandDefinition = {
-  name: string;
   description: string;
-  execute: (args: Record<string, unknown>) => Promise<void>;
+  handler: (args: string, ctx: CommandContext) => Promise<void>;
 };
 
 export type PiInstance = {
   id: string;
   name: string;
   config: Record<string, unknown>;
+  registerTool: (tool: PiToolDefinition) => void;
+  registerCommand: (name: string, command: PiCommandDefinition) => void;
 };
 
 export type PiToolDefinition = {
   name: string;
+  label: string;
   description: string;
+  promptSnippet: string;
   parameters: Record<string, unknown>;
-  execute: (params: Record<string, unknown>) => Promise<ToolExecutionResult>;
+  execute: (
+    toolCallId: string,
+    params: Record<string, unknown>,
+    signal: AbortSignal,
+    onUpdate: (update: unknown) => void,
+    ctx: RuntimeContext,
+  ) => Promise<ToolExecutionResult>;
 };
 
 export type RuntimeContext = {

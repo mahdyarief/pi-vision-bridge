@@ -1,14 +1,10 @@
 import { execFile } from "node:child_process";
-import { access, writeFile, unlink } from "node:fs/promises";
-import { join } from "node:path";
+import { access, unlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { promisify } from "node:util";
 
-import type {
-  PiInstance,
-  RuntimeContext,
-  ToolExecutionResult,
-} from "./types.ts";
+import type { PiInstance, RuntimeContext, ToolExecutionResult } from "./types.ts";
 
 const execFileAsync = promisify(execFile);
 
@@ -470,15 +466,14 @@ export const createExtension = () => {
               totalPages: result.totalPages,
               ocrPages: result.pages.length,
             });
-          } else {
-            const result = await runOcrOnImage(resolved, preprocess);
-            const formatted = formatImageResult(result, resolved, detail);
-            return textResult(formatted, {
-              file: resolved,
-              textCount: result.texts.length,
-              elapsed: result.elapsed,
-            });
           }
+          const result = await runOcrOnImage(resolved, preprocess);
+          const formatted = formatImageResult(result, resolved, detail);
+          return textResult(formatted, {
+            file: resolved,
+            textCount: result.texts.length,
+            elapsed: result.elapsed,
+          });
         } catch (error) {
           const msg = error instanceof Error ? error.message : String(error);
           return textResult(
@@ -487,7 +482,11 @@ export const createExtension = () => {
         } finally {
           // Cleanup temp file
           if (tmpFile) {
-            try { await unlink(tmpFile); } catch { /* ignore */ }
+            try {
+              await unlink(tmpFile);
+            } catch {
+              /* ignore */
+            }
           }
         }
       },
@@ -520,7 +519,10 @@ export const createExtension = () => {
 
         // For command handler, we need to re-execute through the tool logic
         // since the tool handles URL download + cleanup
-        ctx.ui?.notify("Use the vision-ocr tool directly (not the command) for URL support.", "info");
+        ctx.ui?.notify(
+          "Use the vision-ocr tool directly (not the command) for URL support.",
+          "info",
+        );
       },
     });
   };

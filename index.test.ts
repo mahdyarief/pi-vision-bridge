@@ -1,5 +1,5 @@
-import { describe, it } from "node:test";
 import assert from "node:assert/strict";
+import { describe, it } from "node:test";
 
 import { createExtension } from "./src/extension.ts";
 import type { PiInstance, PiToolDefinition } from "./src/types.ts";
@@ -28,7 +28,8 @@ describe("pi-vision-bridge", () => {
   it("tool has correct parameter schema", () => {
     const { instance, tools } = createMockPi();
     createExtension()(instance);
-    const tool = tools.get("vision-ocr")!;
+    const tool = tools.get("vision-ocr");
+    assert.ok(tool, "tool should exist");
     assert.ok(tool.parameters);
     const params = tool.parameters as {
       properties: Record<string, unknown>;
@@ -42,7 +43,8 @@ describe("pi-vision-bridge", () => {
   it("rejects unsupported file formats", async () => {
     const { instance, tools } = createMockPi();
     createExtension()(instance);
-    const tool = tools.get("vision-ocr")!;
+    const tool = tools.get("vision-ocr");
+    assert.ok(tool, "tool should exist");
     const result = await tool.execute(
       "test-1",
       { path: "test.txt" },
@@ -56,7 +58,8 @@ describe("pi-vision-bridge", () => {
   it("rejects missing files", async () => {
     const { instance, tools } = createMockPi();
     createExtension()(instance);
-    const tool = tools.get("vision-ocr")!;
+    const tool = tools.get("vision-ocr");
+    assert.ok(tool, "tool should exist");
     const result = await tool.execute(
       "test-2",
       { path: "C:/nonexistent/fake.png" },
@@ -70,7 +73,8 @@ describe("pi-vision-bridge", () => {
   it("extracts text from real image", async () => {
     const { instance, tools } = createMockPi();
     createExtension()(instance);
-    const tool = tools.get("vision-ocr")!;
+    const tool = tools.get("vision-ocr");
+    assert.ok(tool, "tool should exist");
     const imagePath = "C:/Users/Lenovo/OneDrive/Pictures/KelasVibeCoding3.png";
     const result = await tool.execute(
       "test-3",
@@ -90,7 +94,8 @@ describe("pi-vision-bridge", () => {
   it("detail mode includes confidence scores", async () => {
     const { instance, tools } = createMockPi();
     createExtension()(instance);
-    const tool = tools.get("vision-ocr")!;
+    const tool = tools.get("vision-ocr");
+    assert.ok(tool, "tool should exist");
     const imagePath = "C:/Users/Lenovo/OneDrive/Pictures/KelasVibeCoding3.png";
     const result = await tool.execute(
       "test-4",
@@ -107,7 +112,8 @@ describe("pi-vision-bridge", () => {
   it("extracts text from PDF", async () => {
     const { instance, tools } = createMockPi();
     createExtension()(instance);
-    const tool = tools.get("vision-ocr")!;
+    const tool = tools.get("vision-ocr");
+    assert.ok(tool, "tool should exist");
     const pdfPath = "C:/Users/Lenovo/Downloads/MeritReport_Sample Jc1c_Term1-2.pdf";
     const result = await tool.execute(
       "test-5",
@@ -127,7 +133,8 @@ describe("pi-vision-bridge", () => {
   it("PDF page selection works", async () => {
     const { instance, tools } = createMockPi();
     createExtension()(instance);
-    const tool = tools.get("vision-ocr")!;
+    const tool = tools.get("vision-ocr");
+    assert.ok(tool, "tool should exist");
     const pdfPath = "C:/Users/Lenovo/Downloads/MeritReport_Sample Jc1c_Term1-2.pdf";
     const result = await tool.execute(
       "test-6",
@@ -144,7 +151,8 @@ describe("pi-vision-bridge", () => {
   it("OCR from Imgur URL", async () => {
     const { instance, tools } = createMockPi();
     createExtension()(instance);
-    const tool = tools.get("vision-ocr")!;
+    const tool = tools.get("vision-ocr");
+    assert.ok(tool, "tool should exist");
     const result = await tool.execute(
       "test-7",
       { path: "https://imgur.com/ODylPjg" },
