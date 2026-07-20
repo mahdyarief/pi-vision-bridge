@@ -1,0 +1,48 @@
+{
+  "name": "pi-vision-bridge",
+  "version": "0.2.0",
+  "description": "Pi extension for OCR on images and PDFs using RapidOCR + pymupdf. Bridges the vision gap for AI mode.",
+  "type": "module",
+  "main": "./index.ts",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "scripts": {
+    "build": "echo 'nothing to build'",
+    "check": "npm run test && npm run typecheck && npm run lint",
+    "format": "biome format --write .",
+    "lint": "biome check .",
+    "test": "node --test index.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "pi",
+    "pi-extension",
+    "vision",
+    "ocr",
+    "rapidocr",
+    "pymupdf",
+    "image",
+    "pdf",
+    "text-extraction"
+  ],
+  "author": "Pi",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/USER/pi-vision-bridge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/USER/pi-vision-bridge/issues"
+  },
+  "homepage": "https://github.com/USER/pi-vision-bridge#readme",
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "typescript": "^5.9.3"
+  }
+}
